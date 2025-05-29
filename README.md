@@ -1,4 +1,4 @@
-# Lustige_Huehnchen
+# Funny Chicken
 
 A little Game for my Childrens.
 
