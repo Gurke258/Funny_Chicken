@@ -9,6 +9,7 @@ namespace Lustige_Huehnchen
         public int Score { get; set; }
         public int Rank { get; set; }
         public string? Name { get; set; }
+        public string? Date { get; set; }
     }
 
 

@@ -11,9 +11,10 @@
         <local:RankToColorConverter x:Key="RankColorConverter"/>
         <DataTemplate x:Key="HighScoreTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Rank}"    Width="40" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
+                <TextBlock Text="{Binding Rank}"    Width="40"  Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
                 <TextBlock Text="{Binding Name}"    Width="100" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
-                <TextBlock Text="{Binding Score}"   Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
+                <TextBlock Text="{Binding Score}"   Width="40"  Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
+                <TextBlock Text="{Binding Date}"    Width="100" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>  
