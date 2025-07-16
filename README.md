@@ -16,4 +16,4 @@ Image License
 
 Sound License
 <br>
-Sound Effect by <a href="https://pixabay.com/users/alex_jauk-16800354/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=196746">Alexander Jauk</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=196746">Pixabay</a>
+<a href="https://freesound.org/people/FartCTO/sounds/789839/">Fart Short</a> by <a href="https://freesound.org/people/FartCTO/">FartCTO</a> | License: <a href="http://creativecommons.org/publicdomain/zero/1.0/">Creative Commons 0</a>
