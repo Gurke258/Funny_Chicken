@@ -127,7 +127,7 @@ namespace Lustige_Huehnchen
             Score += 10;
             lblPoints.Content = $"Punkte: {Score}";
 
-            Uri path = new Uri("Sounds/chicken_noise.mp3", UriKind.Relative);
+            Uri path = new Uri("Sounds/fart-short.mp3", UriKind.Relative);
             mediaPlayer.Open(path);
             mediaPlayer.Play();
 
@@ -196,6 +196,12 @@ namespace Lustige_Huehnchen
             int top = _random.Next(0, Math.Max(1, (int)pixelMaxHeight - (int)btnChicken.ActualHeight));
 
             return (left / m.M11, top / m.M22);
+        }
+
+        private void Label_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var highscoreWindow = new Highscore(Highscores);
+            highscoreWindow.Show();
         }
     }
 }

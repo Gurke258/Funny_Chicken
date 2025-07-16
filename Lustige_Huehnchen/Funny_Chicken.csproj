@@ -15,7 +15,13 @@
     <None Remove="Images\chicken.png" />
     <None Remove="Images\egg.png" />
     <None Remove="Images\little_chicken.png" />
-    <None Remove="Sounds\chicken_noise.mp3" />
+    <None Remove="Sounds\fart-short.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Sounds\fart-short.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,9 +34,6 @@
     <Resource Include="Images\little_chicken.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Sounds\chicken_noise.mp3">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>

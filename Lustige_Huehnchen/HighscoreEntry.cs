@@ -24,7 +24,7 @@ namespace Lustige_Huehnchen
                     1 => Brushes.Gold,
                     2 => Brushes.Silver,
                     3 => Brushes.Peru, // Bronze-Farbe
-                    _ => Brushes.Black
+                    _ => Brushes.White
                 };
             }
             return Brushes.Black;
