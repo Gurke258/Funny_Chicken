@@ -6,36 +6,62 @@
         xmlns:local="clr-namespace:Lustige_Huehnchen"  
         mc:Ignorable="d"  
         Background="DimGray"
-        Title="Highscore" Height="300" Width="600" WindowStyle="None" SizeToContent="Width" WindowStartupLocation="CenterScreen">  
-    <Window.Resources>  
+        Title="Highscore" Height="300" Width="600" WindowStyle="None" SizeToContent="Width" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
         <local:RankToColorConverter x:Key="RankColorConverter"/>
         <DataTemplate x:Key="HighScoreTemplate">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Rank}"    Width="40"  Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
-                <TextBlock Text="{Binding Name}"    Width="100" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
-                <TextBlock Text="{Binding Score}"   Width="40"  Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
-                <TextBlock Text="{Binding Date}"    Width="100" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}"/>
+                <TextBlock Text="{Binding Rank}"    Width="50"  Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}" />
+                <TextBlock Text="{Binding Name}"    Width="100" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}" />
+                <TextBlock Text="{Binding Score}"   Width="50"  Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}" />
+                <TextBlock Text="{Binding Date}"    Width="100" Foreground="{Binding Rank, Converter={StaticResource RankColorConverter}}" />
             </StackPanel>
         </DataTemplate>
-    </Window.Resources>  
+    </Window.Resources>
 
-    <Grid>  
-        <Grid.ColumnDefinitions>  
-            <ColumnDefinition Width="20" />  
-            <ColumnDefinition Width="*" />  
-            <ColumnDefinition Width="20" />  
-        </Grid.ColumnDefinitions>  
-        <Grid.RowDefinitions>  
-            <RowDefinition Height="20" />  
-            <RowDefinition Height="40" />  
-            <RowDefinition Height="*" />  
-            <RowDefinition Height="20" />  
-        </Grid.RowDefinitions>  
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="20" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
 
-        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Highscore" FontSize="22" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="560"/>  
+        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Highscore" FontSize="22" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="560"/>
         <StackPanel Grid.Row="2" Grid.Column="1">
-            <ListBox Margin="10" x:Name="HighscoreListBox" ItemsSource="{Binding}" Height="162" Background="DimGray" ItemTemplate="{DynamicResource HighScoreTemplate}" />
-            <Button x:Name="btnExit" Content="Exit" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="btnExit_Click"/>  
-        </StackPanel>  
-    </Grid>  
+            <ListBox Margin="10" x:Name="HighscoreListBox" ItemsSource="{Binding}" Height="162" Background="DimGray" ItemTemplate="{DynamicResource HighScoreTemplate}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.Template>
+                    <ControlTemplate>
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Top" Height="30" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="55"/>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="105"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Content="Rank" HorizontalAlignment="Left"/>
+                                <Label Grid.Column="1" Content="Player" HorizontalAlignment="Left"/>
+                                <Label Grid.Column="2" Content="Points" HorizontalAlignment="left" />
+                                <Label Grid.Column="3" Content="Time" HorizontalAlignment="left"/>
+                            </Grid>
+                            <ItemsPresenter/>
+                        </DockPanel>
+                    </ControlTemplate>
+                </ListBox.Template>
+            </ListBox>
+            <Button x:Name="btnExit" Content="Exit" Margin="10,0,10,10" VerticalAlignment="Bottom" Click="btnExit_Click"/>
+        </StackPanel>
+    </Grid>
 </Window>

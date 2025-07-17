@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
         <Image Source="/Images/chicken.png" Grid.Row="1" Grid.Column="1" Width="50" Height="50
                " Margin="10,0,0,0"  VerticalAlignment="Center" HorizontalAlignment="Left"/>
-        <Label  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Lustiges Hühnchen" FontSize="18" HorizontalAlignment="Center" Margin="0,10,0,10" VerticalAlignment="Top" FontWeight="Bold" />
+        <Label  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Content="Lustiges Hühnchen" FontSize="18" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="40" />
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="960" >
                 <Grid.ColumnDefinitions>

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-
+using System.Data.SQLite;
 
 namespace Lustige_Huehnchen
 {
@@ -30,6 +30,17 @@ namespace Lustige_Huehnchen
         {
             InitializeComponent();
             SetSettings(); // Einstellungen initialisieren
+        }
+
+        private void SQLLiteConnection(string query)
+        {
+            string connectionString = "Data Source=highscore.db;Version=3;";
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            connection.Open();
+            SQLiteCommand command = new SQLiteCommand(query, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+
         }
 
         private void SetSettings()
@@ -202,6 +213,7 @@ namespace Lustige_Huehnchen
         {
             var highscoreWindow = new Highscore(Highscores);
             highscoreWindow.Show();
+ 
         }
     }
 }
