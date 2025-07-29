@@ -16,13 +16,14 @@ namespace Lustige_Huehnchen
         private readonly Button btnChicken = new Button();
         private Image imgChicken = new Image();
         private int Score = 0; // Variable für die Punkte
-        private int TimeInSec = 5; // Zeit in Sekunden
+        private int TimeInSec = 60; // Zeit in Sekunden
         private Random _random = new Random(); // Random als Klassenfeld
         private List<Image> _huehnchenBilder = new List<Image>();  // Bilder persistieren
         public ObservableCollection<HighscoreEntry> Highscores { get; } = new ObservableCollection<HighscoreEntry>();
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         public Highscore highscoreWindow;
         private MediaPlayer mediaPlayer = new MediaPlayer();
+        private bool gameStarted;
 
         
 
@@ -58,6 +59,7 @@ namespace Lustige_Huehnchen
             btnChicken.BorderThickness = new Thickness(0); // Rahmen entfernen
             btnChicken.Width = 40;
             btnChicken.Height = 40;
+            
 
             // Timer Settings
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
@@ -66,8 +68,9 @@ namespace Lustige_Huehnchen
 
         private void ResetGame()
         {
+            gameStarted = false;
             Score = 0;
-            TimeInSec = 5;
+            TimeInSec = 60;
             lblPoints.Content = "Punkte: 0";
             lblTime.Content = $"Zeit verbleibend: {TimeInSec} s";
             btnStart.IsEnabled = true;
@@ -80,19 +83,28 @@ namespace Lustige_Huehnchen
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            
-            dispatcherTimer.Tick -= dispatcherTimer_Tick;
+            if (comboGameMode.SelectedItem != null)
+            {
+                gameStarted = true;
+                dispatcherTimer.Tick -= dispatcherTimer_Tick;
 
-            Canvas.SetLeft(btnChicken, 50); // 50 Pixel vom linken Rand
-            Canvas.SetTop(btnChicken, 30);  // 30 Pixel vom oberen Rand
+                Canvas.SetLeft(btnChicken, 50); // 50 Pixel vom linken Rand
+                Canvas.SetTop(btnChicken, 30);  // 30 Pixel vom oberen Rand
 
-            GameCanvas.Children.Add(btnChicken); // myCanvas ist ein Canvas im XAML
+                GameCanvas.Children.Add(btnChicken); // myCanvas ist ein Canvas im XAML
 
-            dispatcherTimer.Tick += dispatcherTimer_Tick;
-            dispatcherTimer.Start();
-            btnChicken.Click += btnChicken_Click;
-            
-            btnStart.IsEnabled = false;
+                dispatcherTimer.Tick += dispatcherTimer_Tick;
+                dispatcherTimer.Start();
+                btnChicken.Click += btnChicken_Click;
+
+                btnStart.IsEnabled = false;
+                txtPlayer.IsEnabled = false;
+                comboGameMode.IsEnabled = false;
+                if (comboGameMode.SelectedIndex == 0)
+                    btnChicken.Focus();
+            }
+            else
+                throw new Exception("halt");
         }
 
         // ...
@@ -101,6 +113,8 @@ namespace Lustige_Huehnchen
         {
             TimeInSec--; // Zeit in Sekunden erhöhen
             lblTime.Content = $"Zeit verbleibend: {TimeInSec} s";
+            if (comboGameMode.SelectedIndex == 0)
+                btnChicken.Focus();
 
             if (TimeInSec <= 0)
             {
@@ -211,8 +225,12 @@ namespace Lustige_Huehnchen
 
         private void Label_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var highscoreWindow = new Highscore(Highscores);
-            highscoreWindow.Show();
+            if (!gameStarted)
+            {
+                var highscoreWindow = new Highscore(Highscores);
+                highscoreWindow.Show();
+            }
+            
  
         }
     }

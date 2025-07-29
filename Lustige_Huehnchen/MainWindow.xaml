@@ -26,31 +26,72 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="960" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="69*" />
-                    <ColumnDefinition Width="141*" />
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="105*" />
-                    <ColumnDefinition Width="105*" />
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="71*" />
-                    <ColumnDefinition Width="119*" />
-                    <ColumnDefinition Width="35*" />
-                    <ColumnDefinition Width="195*" />
+                    <ColumnDefinition Width="70" />
+                    <ColumnDefinition Width="145" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="95" />
+                    <ColumnDefinition Width="95" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="115" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="110" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="145" />
                 </Grid.ColumnDefinitions>
-                <Label Content="Spieler" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Width="72" Height="29"/>
-                <TextBox x:Name="txtPlayer" Grid.Column="1" Height="20" Margin="0,10,10,0" VerticalAlignment="Top"/>
-                <Label  Grid.Column="2" Content=" | " FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="22"/>
-                <Button x:Name="btnStart"  Grid.Column="3" Content="Start Game" Margin="2,14,10,15" Click="btnStart_Click" />
-                <Button x:Name="btnExit" Grid.Column="4" Content="Exit" Margin="10,14,10,15" Click="btnExit_Click" />
-                <Label  Grid.Column="5" Content=" | " FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="22"/>
+                <Label Content="Spieler:" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Width="72" Height="29"/>
+                <TextBox x:Name="txtPlayer" Grid.Column="1" Height="20" Margin="1,0,0,0" VerticalAlignment="Center" Width="130" HorizontalAlignment="Center" RenderTransformOrigin="0.509,0.405"/>
+                <Separator Grid.Column="2" Style="{DynamicResource VerticalSeparatorStyle}" />
+                <Button x:Name="btnStart"  Grid.Column="3" Content="Start" Margin="10,15,10,15" Click="btnStart_Click" />
+                <Button x:Name="btnExit" Grid.Column="4" Content="Exit" Margin="10,15,10,15" Click="btnExit_Click" />
+                <Separator Grid.Column="5" Style="{DynamicResource VerticalSeparatorStyle}" />
                 <Label MouseDoubleClick="Label_MouseDoubleClick" Grid.Column="6" Content="Highscore" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Width="72" Height="29"/>
-                <Label x:Name="lblPoints" Grid.Column="7" Content="4545 Punkte" FontSize="14" HorizontalAlignment="Center" Margin="0,10,0,10" Width="88"/>
-                <Label  Grid.Column="8" Content=" | " FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center" Height="29" Width="22"/>
-                <Label x:Name="lblTime" Grid.Column="9" Content="Zeit übrig: XXs" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Height="29" Width="166" Margin="1,0,0,0"/>
+                <Separator Grid.Column="7" Style="{DynamicResource VerticalSeparatorStyle}" />
+                <Label x:Name="lblPoints" Grid.Column="8" Content="4545 Punkte" FontSize="14" VerticalAlignment="Center" Width="105" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <Separator Grid.Column="9" Style="{DynamicResource VerticalSeparatorStyle}" />
+                <StackPanel Grid.Column="10" Orientation="Vertical">
+                    <Label Content="GameMode" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <ComboBox x:Name="comboGameMode">
+                        <ComboBoxItem>
+                            <TextBlock Text="Easy" Foreground="Green"/>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="Normal" Foreground="Black"/>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="Hard" Foreground="Red"/>
+                        </ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <Separator Grid.Column="11" Style="{DynamicResource VerticalSeparatorStyle}" />
+                <Label x:Name="lblTime" Grid.Column="12" Content="Zeit übrig: XXs" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center" Height="29" Width="145" Margin="1,0,0,0"/>
             </Grid>
         </StackPanel>
         <Canvas Grid.Row="3" Grid.Column="1" Background="LightBlue" x:Name="GameCanvas" Grid.ColumnSpan="2">
             <!-- Game elements will be added here dynamically -->
         </Canvas>
     </Grid>
+
+    <Window.Resources>
+        <Style x:Key="VerticalSeparatorStyle" 
+       TargetType="{x:Type Separator}"
+       BasedOn="{StaticResource {x:Type Separator}}">
+            <Setter Property="Margin" Value="0,6,0,6"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TransformGroup.Children>
+                            <TransformCollection>
+                                <RotateTransform Angle="90"/>
+                            </TransformCollection>
+                        </TransformGroup.Children>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
 </Window>
+
