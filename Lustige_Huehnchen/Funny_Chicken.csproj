@@ -9,6 +9,8 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyVersion>1.0.1</AssemblyVersion>
     <FileVersion>1.0.1</FileVersion>
+    <StartupObject>Lustige_Huehnchen.App</StartupObject>
+    <PackageIcon></PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data.SQLite;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Data.SQLite;
 
 namespace Lustige_Huehnchen
 {
@@ -15,21 +16,28 @@ namespace Lustige_Huehnchen
     {
         private readonly Button btnChicken = new Button();
         private Image imgChicken = new Image();
-        private int Score = 0; // Variable für die Punkte
-        private int TimeInSec = 60; // Zeit in Sekunden
+        private int _score = 0; // Variable für die Punkte
+        private int _timeInSec = 5; // Zeit in Sekunden
         private Random _random = new Random(); // Random als Klassenfeld
         private List<Image> _huehnchenBilder = new List<Image>();  // Bilder persistieren
         public ObservableCollection<HighscoreEntry> Highscores { get; } = new ObservableCollection<HighscoreEntry>();
-        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        public Highscore highscoreWindow;
-        private MediaPlayer mediaPlayer = new MediaPlayer();
-        private bool gameStarted;
+        private DispatcherTimer _dispatcherTimer = new DispatcherTimer();
+        public Highscore highscoreWindow = default!;
+        private MediaPlayer _mediaPlayer = new MediaPlayer();
+        private bool _gameStarted;
+        private int _lastMouseSpeed;
 
-        
+        //Const
+        public const UInt32 SPI_SETMOUSESPEED = 0x0071;
+        public const uint SPI_GETMOUSESPEED = 0x0070;
+
+
 
         public MainWindow()
         {
             InitializeComponent();
+            comboGameMode.SelectedIndex = 1;
+            _lastMouseSpeed = GetMouseSpeed();
             SetSettings(); // Einstellungen initialisieren
         }
 
@@ -42,6 +50,27 @@ namespace Lustige_Huehnchen
             command.ExecuteNonQuery();
             connection.Close();
 
+        }
+        
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SystemParametersInfo(
+            uint uiAction, uint uiParam, int pvParam, uint fWinIni);
+
+        [DllImport("user32.dll")]
+        private static extern bool SystemParametersInfo(
+            uint uiAction, uint uiParam, out int pvParam, uint fWinIni);
+
+        void SetMouseSpeed(int speed)
+        {
+            // Speed zwischen 1 (langsam) bis 20 (schnell), Standard 10
+            SystemParametersInfo(SPI_SETMOUSESPEED, 0, speed, 0);
+        }
+        public static int GetMouseSpeed()
+        {
+            int speed;
+            SystemParametersInfo(SPI_GETMOUSESPEED, 0, out speed, 0);
+            return speed;  // Wert zwischen 1 (langsam) und 20 (schnell)
         }
 
         private void SetSettings()
@@ -62,18 +91,20 @@ namespace Lustige_Huehnchen
             
 
             // Timer Settings
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            _dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
 
         }
 
         private void ResetGame()
         {
-            gameStarted = false;
-            Score = 0;
-            TimeInSec = 60;
+            _gameStarted = false;
+            _score = 0;
+            _timeInSec = 5;
             lblPoints.Content = "Punkte: 0";
-            lblTime.Content = $"Zeit verbleibend: {TimeInSec} s";
+            lblTime.Content = $"Zeit verbleibend: {_timeInSec} s";
             btnStart.IsEnabled = true;
+            comboGameMode.IsEnabled = true;
+            SetMouseSpeed(_lastMouseSpeed);
             GameCanvas.Children.Clear(); // Canvas leeren
             _huehnchenBilder.Clear(); // Liste der persistierten Bilder leeren
             _huehnchenBilder.Capacity = 0; // Speicher freigeben
@@ -85,16 +116,16 @@ namespace Lustige_Huehnchen
         {
             if (comboGameMode.SelectedItem != null)
             {
-                gameStarted = true;
-                dispatcherTimer.Tick -= dispatcherTimer_Tick;
+                _gameStarted = true;
+                _dispatcherTimer.Tick -= dispatcherTimer_Tick;
 
                 Canvas.SetLeft(btnChicken, 50); // 50 Pixel vom linken Rand
                 Canvas.SetTop(btnChicken, 30);  // 30 Pixel vom oberen Rand
 
                 GameCanvas.Children.Add(btnChicken); // myCanvas ist ein Canvas im XAML
 
-                dispatcherTimer.Tick += dispatcherTimer_Tick;
-                dispatcherTimer.Start();
+                _dispatcherTimer.Tick += dispatcherTimer_Tick;
+                _dispatcherTimer.Start();
                 btnChicken.Click += btnChicken_Click;
 
                 btnStart.IsEnabled = false;
@@ -102,23 +133,27 @@ namespace Lustige_Huehnchen
                 comboGameMode.IsEnabled = false;
                 if (comboGameMode.SelectedIndex == 0)
                     btnChicken.Focus();
+                if (comboGameMode.SelectedIndex == 2)
+                    SetMouseSpeed(3);
+                else
+                    SetMouseSpeed(_lastMouseSpeed);
             }
             else
-                throw new Exception("halt");
+                MessageBox.Show("Einen GameMode auswählen","GameMode fehlt!",MessageBoxButton.OK,MessageBoxImage.Information);
         }
 
         // ...
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void dispatcherTimer_Tick(object? sender, EventArgs e)
         {
-            TimeInSec--; // Zeit in Sekunden erhöhen
-            lblTime.Content = $"Zeit verbleibend: {TimeInSec} s";
+            _timeInSec--; // Zeit in Sekunden erhöhen
+            lblTime.Content = $"Zeit verbleibend: {_timeInSec} s";
             if (comboGameMode.SelectedIndex == 0)
                 btnChicken.Focus();
 
-            if (TimeInSec <= 0)
+            if (_timeInSec <= 0)
             {
-                dispatcherTimer.Stop();
+                _dispatcherTimer.Stop();
                 btnChicken.Click -= btnChicken_Click;
 
                 lblTime.Content = "Zeit abgelaufen!";
@@ -126,8 +161,9 @@ namespace Lustige_Huehnchen
                 // Highscore speichern
                 var newEntry = new HighscoreEntry 
                 { 
-                    Score = Score, 
-                    Name = txtPlayer.Text != "" ? txtPlayer.Text : "Unbekannt" 
+                    Score = _score, 
+                    Name = txtPlayer.Text != "" ? txtPlayer.Text : "Unbekannt",
+                    Date = DateTime.Now.ToString("g")
                 };
 
                 Highscores.Add(newEntry);
@@ -149,12 +185,12 @@ namespace Lustige_Huehnchen
         private void btnChicken_Click(object sender, RoutedEventArgs e)
         {
             // 1. Punkte aktualisieren
-            Score += 10;
-            lblPoints.Content = $"Punkte: {Score}";
+            _score += 10;
+            lblPoints.Content = $"Punkte: {_score}";
 
             Uri path = new Uri("Sounds/fart-short.mp3", UriKind.Relative);
-            mediaPlayer.Open(path);
-            mediaPlayer.Play();
+            _mediaPlayer.Open(path);
+            _mediaPlayer.Play();
 
             // 2. Alte Position des Buttons erfassen
             double oldLeft = Canvas.GetLeft(btnChicken);
@@ -225,7 +261,7 @@ namespace Lustige_Huehnchen
 
         private void Label_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (!gameStarted)
+            if (!_gameStarted)
             {
                 var highscoreWindow = new Highscore(Highscores);
                 highscoreWindow.Show();

@@ -20,7 +20,7 @@ namespace Lustige_Huehnchen
                         Name = s.Name,
                         Score = s.Score,
                         Rank = index + 1,
-                        Date = DateTime.Now.ToString("g")
+                        Date = s.Date
                     })
                     .ToList();
 
