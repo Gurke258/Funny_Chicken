@@ -37,7 +37,7 @@
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="115" />
                     <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="110" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="20" />
                     <ColumnDefinition Width="145" />
                 </Grid.ColumnDefinitions>
@@ -51,9 +51,9 @@
                 <Separator Grid.Column="7" Style="{DynamicResource VerticalSeparatorStyle}" />
                 <Label x:Name="lblPoints" Grid.Column="8" Content="4545 Punkte" FontSize="14" VerticalAlignment="Center" Width="105" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
                 <Separator Grid.Column="9" Style="{DynamicResource VerticalSeparatorStyle}" />
-                <StackPanel Grid.Column="10" Orientation="Vertical">
-                    <Label Content="GameMode" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <ComboBox x:Name="comboGameMode">
+                <StackPanel Grid.Column="10" Orientation="Vertical" HorizontalAlignment="Center">
+                    <Label Content="GameMode" HorizontalAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <ComboBox x:Name="comboGameMode" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                         <ComboBoxItem>
                             <TextBlock Text="Easy" Foreground="Green"/>
                         </ComboBoxItem>

@@ -17,7 +17,7 @@ namespace Lustige_Huehnchen
         private readonly Button btnChicken = new Button();
         private Image imgChicken = new Image();
         private int _score = 0; // Variable für die Punkte
-        private int _timeInSec = 5; // Zeit in Sekunden
+        private int _timeInSec = 60; // Zeit in Sekunden
         private Random _random = new Random(); // Random als Klassenfeld
         private List<Image> _huehnchenBilder = new List<Image>();  // Bilder persistieren
         public ObservableCollection<HighscoreEntry> Highscores { get; } = new ObservableCollection<HighscoreEntry>();
@@ -99,10 +99,11 @@ namespace Lustige_Huehnchen
         {
             _gameStarted = false;
             _score = 0;
-            _timeInSec = 5;
+            _timeInSec = 60;
             lblPoints.Content = "Punkte: 0";
             lblTime.Content = $"Zeit verbleibend: {_timeInSec} s";
             btnStart.IsEnabled = true;
+            txtPlayer.IsEnabled = true;
             comboGameMode.IsEnabled = true;
             SetMouseSpeed(_lastMouseSpeed);
             GameCanvas.Children.Clear(); // Canvas leeren
