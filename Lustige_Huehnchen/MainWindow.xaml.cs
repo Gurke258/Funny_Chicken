@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -269,6 +270,20 @@ namespace Lustige_Huehnchen
             }
             
  
+        }
+
+        private void OpenFlyIn(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Storyboard sb = (Storyboard)this.Resources["FlyInStoryboard"];
+            sb.Begin(this);
+            btnStart.IsEnabled = false;
+        }
+
+        private void CloseFlyIn(object sender, RoutedEventArgs e)
+        {
+            Storyboard sb = (Storyboard)this.Resources["FlyOutStoryboard"];
+            sb.Begin(this);
+            btnStart.IsEnabled = true;
         }
     }
 }
